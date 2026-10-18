@@ -405,7 +405,8 @@ main > .giris {
 .konum-metin {
   grid-column: 7 / 14;
   grid-row: 1;
-  align-self: center;
+  /* Kapı çiziminin altına oturur ki "Bize ulaşın" ile tek grup okunsun */
+  align-self: end;
 }
 
 .konum-metin h2 {
@@ -416,6 +417,11 @@ main > .giris {
 
 .iletisim {
   row-gap: var(--b2);
+}
+
+/* "Neredeyiz?" ve "Bize ulaşın" tek bir grup: aralarında bölüm boşluğu değil, 48px */
+main > .iletisim {
+  padding-block-start: var(--b6);
 }
 
 .iletisim > * {
