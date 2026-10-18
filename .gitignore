@@ -1,0 +1,11 @@
+# İşletim sistemi ve editör artıkları
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+
+# Fotoğrafların düzenlenmemiş, büyük asılları buraya girmez
+img/asil/
