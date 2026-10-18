@@ -348,6 +348,8 @@ main > .giris {
 
 .hakkimizda {
   row-gap: var(--b6);
+  /* Şerit kalktı: gündüzün son bölümü geceye yapışmasın */
+  padding-block-end: var(--bolum-araligi);
 }
 
 .hakkimizda-metin {
@@ -360,31 +362,13 @@ main > .giris {
   margin-block-end: var(--b3);
 }
 
-.hakkimizda > .yer-tutucu:first-of-type {
+.hakkimizda > .yer-tutucu {
   grid-column: 9 / 14;
   grid-row: 1;
   margin-block-start: calc(-1 * var(--b8));
 }
 
-.hakkimizda > .yer-tutucu:last-of-type {
-  grid-column: 3 / 6;
-  grid-row: 2;
-}
 
-/* ---------- Şerit: dört kare, kenardan kenara, aralarında 8px ---------- */
-
-main > .serit {
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--b1);
-}
-
-main > .serit > * {
-  grid-column: auto;
-}
-
-.serit figcaption {
-  padding-inline: var(--b2);
-}
 
 /* ---------- Saatler ---------- */
 
@@ -738,13 +722,6 @@ figcaption,
     transition-duration: 450ms;
   }
 
-  .js-hareket [data-gorun="serit"]:not(.gorundu) {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  .js-hareket [data-gorun="serit"] {
-    transition-duration: 300ms;
-  }
 
   /* İmza: gün çizgisi soldan çizilir, nokta 09'dan şimdiki saate kayar */
   .js-hareket .gun-dolgu,
@@ -823,7 +800,7 @@ figcaption,
   .menu > h2,
   .menu-icerik,
   .hakkimizda-metin,
-  .hakkimizda > .yer-tutucu:first-of-type,
+  .hakkimizda > .yer-tutucu,
   .saatler h2,
   .saatler p:not(.dev-rakam),
   .dev-rakam,
@@ -841,13 +818,12 @@ figcaption,
     row-gap: var(--b4);
   }
 
-  /* Giriş çizimi ve şerit kenar boşluğunu kırıp ekranın iki ucuna değer */
+  /* Giriş çizimi kenar boşluğunu kırıp ekranın iki ucuna değer */
   .giris > .yer-tutucu {
     grid-column: tam-bas / tam-son;
   }
 
-  .giris > .yer-tutucu figcaption,
-  .serit figcaption {
+  .giris > .yer-tutucu figcaption {
     padding-inline: var(--kenar);
   }
 
@@ -863,19 +839,11 @@ figcaption,
     margin-block-start: 0;
   }
 
-  .hakkimizda > .yer-tutucu:first-of-type {
+  .hakkimizda > .yer-tutucu {
     margin-block-start: 0;
   }
 
-  .hakkimizda > .yer-tutucu:last-of-type {
-    grid-column: ic-bas / span 8;
-    grid-row: auto;
-  }
 
-  main > .serit {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: var(--b2);
-  }
 
   .konum > .yer-tutucu {
     grid-column: ic-bas / span 10;
