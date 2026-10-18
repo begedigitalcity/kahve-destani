@@ -56,7 +56,7 @@
 
   /* Puntolar: telefon değeri alt sınır, masaüstü değeri üst sınır */
   --punto-dev: clamp(7.5rem, 22vw, 17.5rem);   /* 120 → 280px */
-  --punto-h1: clamp(3.5rem, 7vw, 5.5rem);      /* 56 → 88px */
+  --punto-h1: clamp(4.25rem, 3rem + 4vw, 5.5rem); /* 68 → 88px (DESIGN 56px; Kararlar 4) */
   --punto-h2: clamp(2.25rem, 4.2vw, 3.25rem);  /* 36 → 52px */
   --punto-giris: 1.25rem;                      /* 20px, masaüstünde 24px */
   --punto-h3: 1.3125rem;                       /* 21px, masaüstünde 24px */
@@ -254,6 +254,10 @@ main > section {
 }
 
 .marka {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: var(--dokunma);
   margin-inline-end: auto;
   font-weight: 600;
   text-decoration: none;
@@ -768,5 +772,190 @@ figcaption,
 
   .js-hareket.hepsi-acik .gun .gun-nokta-yolu {
     transform: translateX(calc(var(--oran, 0) * 100%));
+  }
+}
+
+/* =====================================================================
+   4. aşama: telefona kadar duyarlı (390px ve altı dahil)
+   ===================================================================== */
+
+/* Cümle içindeki bağlantının dokunma alanı satırı bozmadan 48px'e çıkar */
+.menu-not a {
+  padding-block: 0.8125rem;
+}
+
+/* Alttaki sabit bar yalnızca telefonda */
+.alt-bar {
+  display: none;
+}
+
+@media (max-width: 47.99em) {
+
+  /* Üst başlık: iki satır, yapışkan değil (eylemler alttaki barda) */
+  .ust-baslik {
+    position: static;
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding-block: var(--b1);
+  }
+
+  .marka {
+    flex: 1 0 100%;
+  }
+
+  nav ul {
+    gap: var(--b1);
+    margin-inline-start: calc(-1 * var(--b2));
+  }
+
+  .ust-baslik .buton-ara {
+    display: none;
+  }
+
+  html {
+    scroll-padding-top: 0;
+  }
+
+  /* Tek sütun: her şey içerik sütununda, sıralama HTML'deki gibi */
+  main > section > *,
+  .giris-metin,
+  .giris > .yer-tutucu,
+  .menu > h2,
+  .menu-icerik,
+  .hakkimizda-metin,
+  .hakkimizda > .yer-tutucu:first-of-type,
+  .saatler h2,
+  .saatler p:not(.dev-rakam),
+  .dev-rakam,
+  .gun,
+  .konum > .yer-tutucu,
+  .konum-metin,
+  .iletisim > *,
+  .cagri > *,
+  .alt-bilgi > p {
+    grid-column: ic-bas / ic-son;
+    grid-row: auto;
+  }
+
+  main > section {
+    row-gap: var(--b4);
+  }
+
+  /* Giriş çizimi ve şerit kenar boşluğunu kırıp ekranın iki ucuna değer */
+  .giris > .yer-tutucu {
+    grid-column: tam-bas / tam-son;
+  }
+
+  .giris > .yer-tutucu figcaption,
+  .serit figcaption {
+    padding-inline: var(--kenar);
+  }
+
+  main > .giris {
+    padding-block-start: var(--b4);
+  }
+
+  .giris-metin .buton {
+    margin-block-start: var(--b4);
+  }
+
+  .menu-icerik {
+    margin-block-start: 0;
+  }
+
+  .hakkimizda > .yer-tutucu:first-of-type {
+    margin-block-start: 0;
+  }
+
+  .hakkimizda > .yer-tutucu:last-of-type {
+    grid-column: ic-bas / span 8;
+    grid-row: auto;
+  }
+
+  main > .serit {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: var(--b2);
+  }
+
+  .konum > .yer-tutucu {
+    grid-column: ic-bas / span 10;
+  }
+
+  .dev-rakam {
+    margin-block: 0;
+  }
+
+  .cagri .alt-yazi {
+    margin-block-start: calc(-1 * var(--b2));
+  }
+
+  /* Sabit bar: 72px + iPhone'un alt güvenli alanı, hiç gizlenmez */
+  .alt-bar {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: var(--b1);
+    align-items: center;
+    min-height: calc(var(--ust-baslik) + env(safe-area-inset-bottom));
+    padding: var(--b1) var(--kenar) calc(var(--b1) + env(safe-area-inset-bottom));
+    background: var(--krem);
+    color: var(--espresso);
+    border-block-start: 1px solid var(--toprak);
+  }
+
+  .alt-bar .buton {
+    min-height: var(--buton-ana);
+    padding-inline: var(--b1);
+    white-space: nowrap;
+  }
+
+  /* Footer'ın altı barın arkasında kalmasın */
+  body {
+    padding-block-end: calc(var(--buton-ana) + 2 * var(--b1) + 1px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Çok dar ekranlar (320px): menü bağlantılarının iç boşluğu daralır */
+@media (max-width: 22.5em) {
+  nav a {
+    padding-inline: var(--b1);
+  }
+
+  nav ul {
+    margin-inline-start: calc(-1 * var(--b1));
+  }
+
+  /* 320px'te "Hemen ara" tek satıra sığsın diye bardaki ikonlar düşer */
+  .alt-bar .ikon {
+    display: none;
+  }
+}
+
+.marka,
+.buton {
+  white-space: nowrap;
+}
+
+/* Tablet: üç parça tek satıra sığmaz; menü ikinci satıra iner, arama butonu markanın yanında kalır */
+@media (min-width: 48em) and (max-width: 63.99em) {
+  .ust-baslik {
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding-block: var(--b1);
+  }
+
+  .ust-baslik nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .ust-baslik nav ul {
+    margin-inline-start: calc(-1 * var(--b2));
+  }
+
+  html {
+    scroll-padding-top: 7.5rem;
   }
 }
