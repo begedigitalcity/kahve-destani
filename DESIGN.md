@@ -53,3 +53,13 @@ HAREKET
 
 YASAK: gradyan ve gradyanlı metin; ortalanmış hero + gri alt başlık + yan yana iki buton; ikonlu üç eşit kart; "Yükselt, Keşfet, Kusursuz, Güçlendir, Devrim, Dönüştür, Günümüzün hızlı dünyasında"; emoji ikon; glassmorphism, neon, gölge; stok fotoğraf; uydurma yorum, puan, logo şeridi, istatistik. ⚠️ Saatler (09.00–00.00) teyit edilmeden yayına çıkmaz; değişirse "00.00" ve gün çizgisi onunla değişir.
 ```
+
+---
+
+## Kararlar (bloktan sonra alınanlar)
+
+Yukarıdaki blok değişmez. Onunla çelişen bir karar alınırsa burada, tarihiyle yazılır ve bu bölüm kazanır.
+
+1. **Ana buton "Yol tarifi al".** (Berra Gök, 18 Ekim 2026.) Blok "Hemen ara"yı ana buton yapmıştı. Hero'da ve çağrıda dolu buton "Yol tarifi al"dır: gündüzde firuze dolgu ve krem yazı, gecede lamba dolgu ve espresso yazı. "Hemen ara" ise üst başlıkta ve iletişim bloğunda çerçeveli ikinci buton olarak durur.
+2. **Metin genişliği 44ch.** Bloktaki "66ch" bu yazı karakterinde satıra 84 harf sığdırıyordu. Bloğun asıl istediği şey satırda en fazla 66 karakter olması. Bu yüzden ölçülerek 44ch'ye çekildi.
+3. **Yazı karakterleri yerelde.** Google Fonts'tan çekilmiyor, `fonts/` klasöründe duruyor (OFL lisansları yanında). Böylece ziyaretçinin IP adresi Google'a gitmiyor.

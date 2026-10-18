@@ -42,6 +42,18 @@
   --karakter-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --karakter-metin: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
+  /* Renkler (taslak palet; tabela rengi gelince --firuze onunla değişir) */
+  --krem: #F6EFE3;      /* gündüz zemini, gece bölümünde metin */
+  --espresso: #2A1D17;  /* metin, gece zemini */
+  --firuze: #0E6466;    /* ana buton, bağlantı. Espresso üstünde asla (2.36:1) */
+  --lamba: #E8B04B;     /* yalnızca koyu zeminde. Krem üstünde asla (1.71:1) */
+  --toprak: #6A5547;    /* alt yazı. Espresso üstünde asla (2.33:1) */
+
+  /* Hareket */
+  --egri: cubic-bezier(0.2, 0, 0, 1);
+  --sure-geri-bildirim: 200ms;
+  --sure-basma: 150ms;
+
   /* Puntolar: telefon değeri alt sınır, masaüstü değeri üst sınır */
   --punto-dev: clamp(7.5rem, 22vw, 17.5rem);   /* 120 → 280px */
   --punto-h1: clamp(3.5rem, 7vw, 5.5rem);      /* 56 → 88px */
@@ -466,4 +478,295 @@ main > .serit > * {
 
 .yer-tutucu figcaption {
   margin-block-start: var(--b1);
+}
+
+/* =====================================================================
+   3. aşama: renk ve bilinçli hamle — sayfa sabahtan gece yarısına akar
+   ===================================================================== */
+
+/* ---------- Gündüz: krem zemin, espresso metin ---------- */
+
+body {
+  background: var(--krem);
+  color: var(--espresso);
+}
+
+::selection {
+  background: var(--espresso);
+  color: var(--krem);
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.ust-baslik {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--krem);
+  border-block-end: 1px solid var(--toprak);
+}
+
+.menu-not a {
+  color: var(--firuze);
+}
+
+figcaption,
+.fiyat {
+  color: var(--toprak);
+}
+
+.menu-liste li,
+.menu-liste li:last-child {
+  border-color: var(--toprak);
+}
+
+/* Ana buton: Yol tarifi al (karar: DESIGN.md, Kararlar 1) */
+.buton-ana {
+  background: var(--firuze);
+  border-color: var(--firuze);
+  color: var(--krem);
+}
+
+.durum {
+  display: flex;
+  align-items: center;
+  gap: var(--b1);
+  margin-block-start: var(--b2);
+  font-weight: 600;
+}
+
+.durum::before {
+  content: "";
+  flex: none;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--firuze);
+}
+
+.durum.kapali::before {
+  background: var(--toprak);
+}
+
+/* ---------- Gece: saatlerden sona kadar espresso zemin ---------- */
+
+.saatler,
+.konum,
+.iletisim,
+.cagri,
+.alt-bilgi {
+  background: var(--espresso);
+  color: var(--krem);
+}
+
+.saatler figcaption,
+.konum figcaption,
+.cagri .alt-yazi,
+.alt-bilgi {
+  color: var(--krem);
+}
+
+.alt-bilgi {
+  border-color: var(--krem);
+}
+
+.dev-rakam {
+  color: var(--lamba);
+}
+
+.saatler .durum::before {
+  background: var(--lamba);
+}
+
+.saatler .durum.kapali::before {
+  background: var(--krem);
+}
+
+/* Gecede birincil buton lamba, ikincil buton krem çerçeve */
+.buton-gece,
+.iletisim .buton:first-child {
+  background: var(--lamba);
+  border-color: var(--lamba);
+  color: var(--espresso);
+}
+
+/* ---------- Gün çizgisi: 09.00'dan 00.00'a ---------- */
+
+.gun {
+  grid-column: 2 / 14;
+  margin-block-end: var(--b3);
+}
+
+.gun-cizgi {
+  position: relative;
+  height: 0.75rem;
+}
+
+.gun-dolgu {
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 2px;
+  margin-block-start: -1px;
+  background: var(--lamba);
+  transform-origin: left center;
+}
+
+/* Yol çizgiyle aynı genişlikte; translateX yüzdesi bu yüzden çizgi üzerindeki konumdur */
+.gun-nokta-yolu {
+  position: absolute;
+  inset: 0;
+  transform: translateX(calc(var(--oran, 0) * 100%));
+}
+
+.gun-nokta {
+  position: absolute;
+  top: 0;
+  left: -0.375rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--lamba);
+  box-shadow: 0 0 0 3px var(--espresso);
+}
+
+.gun-etiketler {
+  display: flex;
+  justify-content: space-between;
+  margin-block-start: var(--b1);
+  font-size: var(--punto-alt);
+  line-height: var(--satir-alt);
+}
+
+/* ---------- Yer tutucu çizimler: iki renkli düz blok, ince yıldız ---------- */
+
+.yt-zemin {
+  stroke: none;
+}
+
+.yt-a .yt-zemin { fill: var(--espresso); }
+.yt-a .yt-yildiz { stroke: var(--lamba); }
+.yt-b .yt-zemin { fill: var(--firuze); }
+.yt-b .yt-yildiz { stroke: var(--krem); }
+
+/* =====================================================================
+   Hareket — yalnızca transform ve opacity, yalnızca hareket tercih edilirse
+   ===================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Arayüz geri bildirimi: 150–250ms. Renk geçişsiz değişir. */
+  .buton {
+    transition: transform var(--sure-geri-bildirim) var(--egri);
+  }
+
+  .buton:hover {
+    transform: translateY(-2px);
+  }
+
+  .buton:active {
+    transform: scale(0.97);
+    transition-duration: var(--sure-basma);
+  }
+
+  nav a {
+    position: relative;
+  }
+
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: var(--b2);
+    right: var(--b2);
+    bottom: 0.625rem;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--sure-geri-bildirim) var(--egri);
+  }
+
+  nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Girişler: 300–500ms, ease-out. Gizli durum yalnızca betiğin eklediği sınıfla. */
+  .js-hareket [data-gorun] {
+    transition: opacity 400ms var(--egri), transform 400ms var(--egri);
+  }
+
+  .js-hareket [data-gorun="h1"]:not(.gorundu) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .js-hareket [data-gorun="h1"] {
+    transition-duration: 450ms;
+  }
+
+  .js-hareket [data-gorun="durum"]:not(.gorundu) {
+    opacity: 0;
+  }
+  .js-hareket [data-gorun="durum"] {
+    transition-duration: 300ms;
+    transition-delay: 100ms;
+  }
+
+  .js-hareket [data-gorun="hero-gorsel"]:not(.gorundu) {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  .js-hareket [data-gorun="menu"]:not(.gorundu) {
+    opacity: 0;
+  }
+  .js-hareket [data-gorun="menu"] {
+    transition-duration: 350ms;
+    transition-delay: calc(var(--sira, 0) * 60ms);
+  }
+
+  .js-hareket [data-gorun="portre"]:not(.gorundu) {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  .js-hareket [data-gorun="portre"] {
+    transition-duration: 450ms;
+  }
+
+  .js-hareket [data-gorun="serit"]:not(.gorundu) {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  .js-hareket [data-gorun="serit"] {
+    transition-duration: 300ms;
+  }
+
+  /* İmza: gün çizgisi soldan çizilir, nokta 09'dan şimdiki saate kayar */
+  .js-hareket .gun-dolgu,
+  .js-hareket .gun-nokta-yolu {
+    transition: transform 500ms var(--egri);
+  }
+
+  .js-hareket .gun:not(.gorundu) .gun-dolgu {
+    transform: scaleX(0);
+  }
+
+  .js-hareket .gun:not(.gorundu) .gun-nokta-yolu {
+    transform: translateX(0);
+  }
+
+  /* Güvenlik saati: 2,5 saniye sonra hâlâ gizli olan her şey açılır */
+  .js-hareket.hepsi-acik [data-gorun] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .js-hareket.hepsi-acik .gun .gun-dolgu {
+    transform: none;
+  }
+
+  .js-hareket.hepsi-acik .gun .gun-nokta-yolu {
+    transform: translateX(calc(var(--oran, 0) * 100%));
+  }
 }
