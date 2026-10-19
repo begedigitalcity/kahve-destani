@@ -48,6 +48,12 @@
   --firuze: #0E6466;    /* yalnızca ana buton ve iki çizim (denetim 5). Espresso üstünde asla (2.36:1) */
   --lamba: #E8B04B;     /* yalnızca koyu zeminde. Krem üstünde asla (1.71:1) */
   --toprak: #6A5547;    /* alt yazı. Espresso üstünde asla (2.33:1) */
+  --kum: #EDE2CF;       /* gündüzde kart zemini (Kararlar 6). Toprak/kum 5.5:1, espresso/kum 12.9:1 */
+  --kahve: #3A2A22;     /* gecede kart zemini (Kararlar 6). Krem/kahve 11.9:1, lamba/kahve 7.0:1 */
+
+  /* Köşeler (Kararlar 6): çizimler ve kartlar yumuşak, butonlar hap biçiminde */
+  --yuvarlak: 1.25rem;  /* 20px */
+  --yuvarlak-buton: 999px;
 
   /* Hareket */
   --egri: cubic-bezier(0.2, 0, 0, 1);
@@ -124,7 +130,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-padding-top: var(--ust-baslik);
+  /* Menüden bir bölüme atlayınca başlık üst çubuğun altında, biraz boşlukla durur */
+  scroll-padding-top: calc(var(--ust-baslik) + var(--b3));
 }
 
 body {
@@ -199,8 +206,9 @@ address a,
   justify-content: center;
   gap: var(--b1);
   min-height: var(--dokunma);
-  padding: 0 var(--b3);
+  padding: 0 var(--b4);
   border: 2px solid currentColor;
+  border-radius: var(--yuvarlak-buton);
   font-weight: 600;
   line-height: var(--satir-buton);
   text-decoration: none;
@@ -307,31 +315,36 @@ main > .giris {
   grid-column: 8 / tam-son;
 }
 
-/* ---------- Menü: başlık 1–5, liste 7–12 ve 96px aşağıda ---------- */
+/* Çizim ekranın yüksekliğine göre kısalır; blok doldurur, yıldız ortada kalır */
+.giris > .yer-tutucu svg {
+  height: min(70svh, 40rem);
+  clip-path: inset(0 round var(--yuvarlak) 0 0 var(--yuvarlak));
+}
+
+/* ---------- Menü: başlık 1–4, iki kart yan yana 5–12 (Kararlar 6) ---------- */
 
 .menu > h2 {
-  grid-column: 2 / 7;
+  grid-column: 2 / 6;
   grid-row: 1;
 }
 
 .menu-icerik {
-  grid-column: 8 / 14;
+  grid-column: 6 / 14;
   grid-row: 1;
-  margin-block-start: var(--b12);
 }
 
 .menu-liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--b2);
   padding: 0;
   list-style: none;
 }
 
 .menu-liste li {
-  padding-block: var(--b3);
-  border-block-start: 1px solid;
-}
-
-.menu-liste li:last-child {
-  border-block-end: 1px solid;
+  padding: var(--b4);
+  border-radius: var(--yuvarlak);
+  background: var(--kum);
 }
 
 .menu-liste h3 {
@@ -344,6 +357,7 @@ main > .giris {
 
 .menu-not {
   margin-block-start: var(--b3);
+  padding-inline: var(--b4);
 }
 
 /* ---------- Hakkımızda: metin 1–6, portre 7–12 ve 64px yukarı taşar ---------- */
@@ -397,44 +411,50 @@ main > .giris {
   grid-column: 2 / 9;
 }
 
-/* ---------- Konum: kapı 1–4, metin 7–12 ---------- */
+/* ---------- Konum ve iletişim: kapı 1–5, yanında tek kart 6–12 (Kararlar 6) ---------- */
+
+.konum {
+  align-items: stretch;
+}
 
 .konum > .yer-tutucu {
   grid-column: 2 / 6;
   grid-row: 1;
 }
 
-.konum-metin {
-  grid-column: 8 / 14;
+.konum > .yer-tutucu svg {
+  clip-path: inset(0 round var(--yuvarlak));
+}
+
+.konum-kart {
+  grid-column: 6 / 14;
   grid-row: 1;
-  /* Kapı çiziminin altına oturur ki "Bize ulaşın" ile tek grup okunsun */
-  align-self: end;
+  display: grid;
+  align-content: center;
+  gap: var(--b4);
+  padding: var(--b6);
+  border-radius: var(--yuvarlak);
 }
 
-.konum-metin h2 {
-  margin-block-end: var(--b3);
+.konum-kart h2 {
+  margin-block-end: var(--b2);
 }
 
-/* ---------- Bize ulaşın ---------- */
+.konum-adres {
+  font-size: var(--punto-giris);
+  line-height: var(--satir-giris);
+}
 
 .iletisim {
-  row-gap: var(--b2);
-}
-
-/* "Neredeyiz?" ve "Bize ulaşın" tek bir grup: aralarında bölüm boşluğu değil, 48px */
-main > .iletisim {
-  padding-block-start: var(--b6);
-}
-
-.iletisim > * {
-  grid-column: 8 / 14;
+  padding-block-start: var(--b4);
+  border-block-start: 1px solid;
 }
 
 .iletisim-butonlar {
   display: flex;
   flex-wrap: wrap;
   gap: var(--b1);
-  margin-block-start: var(--b1);
+  margin-block-start: var(--b3);
 }
 
 /* ---------- Çağrı ---------- */
@@ -461,7 +481,11 @@ main > .iletisim {
 }
 
 .alt-bilgi > p {
-  grid-column: 2 / 14;
+  grid-column: span 4;
+}
+
+.alt-bilgi > p:first-child {
+  grid-column: 2 / 6;
 }
 
 /* ---------- Yer tutucu çizimler ---------- */
@@ -474,6 +498,10 @@ main > .iletisim {
 
 .yer-tutucu figcaption {
   margin-block-start: var(--b1);
+}
+
+.hakkimizda > .yer-tutucu svg {
+  clip-path: inset(0 round var(--yuvarlak));
 }
 
 /* =====================================================================
@@ -548,7 +576,6 @@ figcaption,
 
 .saatler,
 .konum,
-.iletisim,
 .cagri,
 .alt-bilgi {
   background: var(--espresso);
@@ -563,7 +590,15 @@ figcaption,
 }
 
 .alt-bilgi {
-  border-color: var(--krem);
+  border-color: var(--kahve);
+}
+
+.konum-kart {
+  background: var(--kahve);
+}
+
+.iletisim {
+  border-color: var(--toprak);
 }
 
 .dev-rakam {
@@ -591,6 +626,11 @@ figcaption,
 .gun {
   grid-column: 2 / 14;
   margin-block-end: var(--b3);
+  /* Noktanın yolu çizgiyle aynı genişlikte ve sağa kayıyor; sayfayı yana taşırmasın.
+     İç boşluk, uçtaki noktanın ve halkasının kesilmemesi için. */
+  overflow: hidden;
+  padding: 3px 0.5rem;
+  margin-inline: -0.5rem;
 }
 
 .gun-cizgi {
@@ -728,6 +768,19 @@ figcaption,
   }
 
 
+  .js-hareket [data-gorun="kapi"]:not(.gorundu) {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  .js-hareket [data-gorun="kart"]:not(.gorundu) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .js-hareket [data-gorun="kart"] {
+    transition-delay: 100ms;
+  }
+
   /* İmza: gün çizgisi soldan çizilir, nokta 09'dan şimdiki saate kayar */
   .js-hareket .gun-dolgu,
   .js-hareket .gun-nokta-yolu {
@@ -816,8 +869,7 @@ figcaption,
   .dev-rakam,
   .gun,
   .konum > .yer-tutucu,
-  .konum-metin,
-  .iletisim > *,
+  .konum-kart,
   .cagri > *,
   .alt-bilgi > p {
     grid-column: ic-bas / ic-son;
@@ -857,6 +909,30 @@ figcaption,
 
   .konum > .yer-tutucu {
     grid-column: ic-bas / span 10;
+  }
+
+  .konum > .yer-tutucu svg {
+    max-height: 22rem;
+  }
+
+  .konum-kart {
+    padding: var(--b4) var(--b3);
+  }
+
+  .giris > .yer-tutucu svg {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    clip-path: none;
+  }
+
+  .menu-liste li,
+  .menu-not {
+    padding-inline: var(--b3);
+  }
+
+  .alt-bilgi > p,
+  .alt-bilgi > p:first-child {
+    grid-column: ic-bas / ic-son;
   }
 
   .dev-rakam {
