@@ -45,7 +45,7 @@
   /* Renkler (taslak palet; tabela rengi gelince --firuze onunla değişir) */
   --krem: #F6EFE3;      /* gündüz zemini, gece bölümünde metin */
   --espresso: #2A1D17;  /* metin, gece zemini */
-  --firuze: #0E6466;    /* ana buton, bağlantı. Espresso üstünde asla (2.36:1) */
+  --firuze: #0E6466;    /* yalnızca ana buton ve iki çizim (denetim 5). Espresso üstünde asla (2.36:1) */
   --lamba: #E8B04B;     /* yalnızca koyu zeminde. Krem üstünde asla (1.71:1) */
   --toprak: #6A5547;    /* alt yazı. Espresso üstünde asla (2.33:1) */
 
@@ -505,10 +505,6 @@ body {
   border-block-end: 1px solid var(--toprak);
 }
 
-.menu-not a {
-  color: var(--firuze);
-}
-
 figcaption,
 .fiyat {
   color: var(--toprak);
@@ -519,7 +515,8 @@ figcaption,
   border-color: var(--toprak);
 }
 
-/* Ana buton: Yol tarifi al (karar: DESIGN.md, Kararlar 1) */
+/* Ana buton: Yol tarifi al (karar: DESIGN.md, Kararlar 1).
+   Firuze yalnızca burada ve iki çizimde; bağlantılar metin renginde, altı çizili. */
 .buton-ana {
   background: var(--firuze);
   border-color: var(--firuze);
@@ -540,7 +537,7 @@ figcaption,
   width: 0.625rem;
   height: 0.625rem;
   border-radius: 50%;
-  background: var(--firuze);
+  background: var(--espresso);
 }
 
 .durum.kapali::before {
