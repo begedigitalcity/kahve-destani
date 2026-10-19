@@ -185,7 +185,6 @@ address {
 /* Dokunulabilir her bağlantı en az 48px */
 nav a,
 address a,
-.konum-metin a,
 .alt-bilgi a,
 .alt-yazi a {
   display: inline-flex;
