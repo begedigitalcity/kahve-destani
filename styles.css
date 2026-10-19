@@ -250,7 +250,8 @@ main > section {
   align-items: center;
   gap: var(--b4);
   min-height: var(--ust-baslik);
-  padding-inline: var(--kenar);
+  /* Geniş ekranda da marka, içerik sütununun sol kenarından başlar */
+  padding-inline: max(var(--kenar), (100% - var(--icerik-genisligi)) / 2);
 }
 
 .marka {
@@ -280,14 +281,16 @@ nav a {
   text-decoration: none;
 }
 
-/* ---------- Giriş: metin 1–7, çizim 8'den ekranın sağ kenarına ---------- */
+/* ---------- Hiza: sayfada yalnızca iki sol kenar var, 1. ve 7. sütun ---------- */
+
+/* ---------- Giriş: metin 1–6, çizim 7'den ekranın sağ kenarına ---------- */
 
 main > .giris {
   padding-block-start: var(--b8);
 }
 
 .giris-metin {
-  grid-column: 2 / 9;
+  grid-column: 2 / 8;
   align-self: center;
 }
 
@@ -302,18 +305,18 @@ main > .giris {
 }
 
 .giris > .yer-tutucu {
-  grid-column: 9 / tam-son;
+  grid-column: 8 / tam-son;
 }
 
-/* ---------- Menü: başlık 2–5, liste 6–12 ve 96px aşağıda ---------- */
+/* ---------- Menü: başlık 1–5, liste 7–12 ve 96px aşağıda ---------- */
 
 .menu > h2 {
-  grid-column: 3 / 7;
+  grid-column: 2 / 7;
   grid-row: 1;
 }
 
 .menu-icerik {
-  grid-column: 7 / 14;
+  grid-column: 8 / 14;
   grid-row: 1;
   margin-block-start: var(--b12);
 }
@@ -344,7 +347,7 @@ main > .giris {
   margin-block-start: var(--b3);
 }
 
-/* ---------- Hakkımızda: metin 1–6, portre 8–12 ve 64px yukarı taşar ---------- */
+/* ---------- Hakkımızda: metin 1–6, portre 7–12 ve 64px yukarı taşar ---------- */
 
 .hakkimizda {
   row-gap: var(--b6);
@@ -363,7 +366,7 @@ main > .giris {
 }
 
 .hakkimizda > .yer-tutucu {
-  grid-column: 9 / 14;
+  grid-column: 8 / 14;
   grid-row: 1;
   margin-block-start: calc(-1 * var(--b8));
 }
@@ -395,7 +398,7 @@ main > .giris {
   grid-column: 2 / 9;
 }
 
-/* ---------- Konum: kapı 1–4, metin 6–12 ---------- */
+/* ---------- Konum: kapı 1–4, metin 7–12 ---------- */
 
 .konum > .yer-tutucu {
   grid-column: 2 / 6;
@@ -403,7 +406,7 @@ main > .giris {
 }
 
 .konum-metin {
-  grid-column: 7 / 14;
+  grid-column: 8 / 14;
   grid-row: 1;
   /* Kapı çiziminin altına oturur ki "Bize ulaşın" ile tek grup okunsun */
   align-self: end;
@@ -425,7 +428,7 @@ main > .iletisim {
 }
 
 .iletisim > * {
-  grid-column: 7 / 14;
+  grid-column: 8 / 14;
 }
 
 .iletisim-butonlar {
@@ -773,6 +776,11 @@ figcaption,
 }
 
 @media (max-width: 47.99em) {
+
+  /* Sütun aralığı kenar boşluğundan küçük kalsın ki içerik 20px'ten başlasın, 24px'ten değil */
+  :root {
+    --sutun-araligi: var(--b2);
+  }
 
   /* Üst başlık: iki satır, yapışkan değil (eylemler alttaki barda) */
   .ust-baslik {
