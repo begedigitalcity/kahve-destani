@@ -954,7 +954,8 @@ figcaption,
   }
 
   .alt-bilgi > p,
-  .alt-bilgi > p:first-child {
+  .alt-bilgi > p:first-child,
+  .alt-bilgi > p:nth-child(n) {
     grid-column: ic-bas / ic-son;
   }
 
